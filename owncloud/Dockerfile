@@ -28,8 +28,7 @@ RUN mkdir -p /opt \
     && tar xjf $OWNCLOUD_PACKAGE \
     && rm $OWNCLOUD_PACKAGE \
     && mkdir -p /opt/owncloud/config /opt/owncloud/data \
-    && chmod 0770 /opt/owncloud/data \
-    && chown nobody:nogroup /opt/owncloud/config /opt/owncloud/data
+    && chmod 0770 /opt/owncloud/data
 
 # move files into their respective places
 COPY build /root/build/
