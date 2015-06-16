@@ -30,7 +30,7 @@ RUN mkdir -p /opt \
     && mkdir -p /opt/owncloud/config /opt/owncloud/data \
     && adduser -S -D -H -u 1000 phpfpm \
     && addgroup -S -g 50 phpfpm \
-    && chown php:staff /opt/owncloud/config /opt/owncloud/data
+    && chown phpfpm:phpfpm /opt/owncloud/config /opt/owncloud/data
 
 # move files into their respective places
 COPY build /root/build/
