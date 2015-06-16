@@ -6,7 +6,7 @@ ENV HOME=/root
 
 # install packages
 RUN apk --update --no-progress add \
-		nginx git vim curl openssl \
+		nginx git vim curl openssl samba-client \
 		php-fpm php-json php-mysql php-curl php-xml php-iconv php-ctype php-dom \
         php-gd php-ftp php-posix php-zip php-zlib php-bz2 php-openssl php-mcrypt \
 		php-pdo_mysql php-pdo_sqlite php-sqlite3 \
@@ -28,9 +28,8 @@ RUN mkdir -p /opt \
     && tar xjf $OWNCLOUD_PACKAGE \
     && rm $OWNCLOUD_PACKAGE \
     && mkdir -p /opt/owncloud/config /opt/owncloud/data \
-    && adduser -S -D -H -u 1000 phpfpm \
-    && addgroup -S -g 50 phpfpm \
-    && chown phpfpm:phpfpm /opt/owncloud/config /opt/owncloud/data
+    && chmod 0770 /opt/owncloud/data \
+    && chown nobody:nogroup /opt/owncloud/config /opt/owncloud/data
 
 # move files into their respective places
 COPY build /root/build/
