@@ -1,0 +1,29 @@
+#!/usr/bin/with-contenv sh
+
+CONFIG_FILE="/etc/samba/smb.conf"
+
+cat > ${CONFIG_FILE} << __EOF__
+[global]
+    workgroup = WORKGROUP
+    server string = ahh %h server
+    netbios name = wut
+    security = user
+    map to guest = bad user
+    syslog = 2
+    syslog only = yes
+    log file = /var/log/samba/log.%m
+    guest account = nobody
+    printing = bsd
+    printcap name = /dev/null
+
+[${SHARE_NAME:-public}]
+    path = /data
+    public = yes
+    writable = yes
+    comment = Public share
+    printable = no
+    guest ok = yes
+    only guest = yes
+__EOF__
+
+smbd --foreground --log-stdout --configfile=${CONFIG_FILE}
