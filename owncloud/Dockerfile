@@ -28,8 +28,8 @@ RUN mkdir -p /opt \
     && tar xjf $OWNCLOUD_PACKAGE \
     && rm $OWNCLOUD_PACKAGE \
     && mkdir -p /opt/owncloud/config /opt/owncloud/data \
-    && adduser -S -D -H -u 1000 php \
-    && addgroup -S -g 50 staff \
+    && adduser -S -D -H -u 1000 phpfpm \
+    && addgroup -S -g 50 phpfpm \
     && chown php:staff /opt/owncloud/config /opt/owncloud/data
 
 # move files into their respective places
