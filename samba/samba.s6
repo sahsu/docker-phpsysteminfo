@@ -25,7 +25,7 @@ for DIRECTORY in ${DIRECTORIES:-data}; do
     USERNAME=$(stat -c '%U' "/${DIRECTORY}")
     if [ "UNKNOWN" == "$USERNAME" ]; then
         USERID=$(stat -c '%u' "/${DIRECTORY}")
-        USERNAME="samba"
+        USERNAME="samba${DIRECTORY}"
         adduser -S -D -H -u $USERID $USERNAME
     fi
 
