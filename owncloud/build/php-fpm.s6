@@ -7,6 +7,10 @@ if [ "UNKNOWN" == "$USERNAME" ]; then
     USERNAME="php"
     adduser -S -D -H -u $USERID $USERNAME
 fi
+if [ "root" == "$USERNAME" ]; then
+    USERNAME="php"
+    adduser -S -D -H $USERNAME
+fi
 sed -i "s/user *=.*$/user = $USERNAME/" /etc/php/php-fpm.conf
 
 # Ensure PHP owns the config and data directories
