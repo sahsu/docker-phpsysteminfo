@@ -16,7 +16,8 @@ CMD ["/init"]
 
 COPY remote_syslog.s6 /etc/services.d/remote_syslog/run
 
-VOLUME ["/etc/log_files.yml"]
+# This creates a directory, which is not right.  But you should "docker run -v" this file.
+#VOLUME ["/etc/log_files.yml"]
 
 ENV PAPERTRAIL_VERSION 0.14
 ENV PAPERTRAIL_URL https://github.com/papertrail/remote_syslog2/releases/download/v$PAPERTRAIL_VERSION/remote_syslog_linux_amd64.tar.gz
