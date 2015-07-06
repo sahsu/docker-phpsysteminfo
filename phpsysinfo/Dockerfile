@@ -9,8 +9,9 @@ RUN apk --update --no-progress add php php-xml php-dom openssl \
 	&& rm -rf /var/cache/apk/*
 
 # install s6 supervisor
+ENV S6_VERSION 1.13.0.0
 RUN cd /tmp \
-    && wget https://github.com/just-containers/s6-overlay/releases/download/v1.10.0.3/s6-overlay-amd64.tar.gz \
+    && wget https://github.com/just-containers/s6-overlay/releases/download/v$S6_VERSION/s6-overlay-amd64.tar.gz \
     && tar xzf s6-overlay-amd64.tar.gz -C /
 CMD ["/init"]
 
