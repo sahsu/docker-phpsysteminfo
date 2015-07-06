@@ -3,6 +3,10 @@ MAINTAINER Stephen Packer <steve@stevepacker.com>
 
 ENV HOME=/root
 
+# install packages
+RUN apk --update --no-progress add openssl \
+	&& rm -rf /var/cache/apk/*
+
 # install s6 supervisor
 ENV S6_VERSION 1.13.0.0
 RUN cd /tmp \
@@ -18,7 +22,7 @@ ENV PAPERTRAIL_VERSION 0.14
 ENV PAPERTRAIL_URL https://github.com/papertrail/remote_syslog2/releases/download/v$PAPERTRAIL_VERSION/remote_syslog_linux_amd64.tar.gz
 RUN mkdir -p /opt \
     && cd /opt \
-    && curl -LOs $PAPERTRAIL_URL \
+    && wget $PAPERTRAIL_URL \
     && tar xfz remote_syslog_linux_amd64.tar.gz \
     && rm remote_syslog_linux_amd64.tar.gz \
     && mv remote_syslog /usr/local/bin
