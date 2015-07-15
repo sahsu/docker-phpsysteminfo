@@ -16,7 +16,7 @@ This is a container exclusively for building a Docker container.  It will:
         -e REPO_URL=https://github.com/stevepacker/docker-containers.git \
         -e REPO_BRANCH=master \
         -e REPO_PATH=builder \
-        -e DOCKER_NAME=stevepacker/docker-builder:master \
+        -e DOCKER_TAG=stevepacker/docker-builder:master \
         stevepacker/builder
 
 * Mounting the host's docker.sock is not necessary, but it's ideal for only running a single docker service.

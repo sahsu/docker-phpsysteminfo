@@ -2,24 +2,27 @@
 
 cd /home/build/
 
+HOME=$(pwd)
+
 #1. Git clone the repo (use REPO_URL env variable for this) to a workspace directory.
 rm -Rf project
-git clone $REPO_URL project
+echo "... git clone $REPO_URL project"
+git clone "$REPO_URL" project
 
 #2. Git checkout appropriate branch (use REPO_BRANCH to use a branch other than "master")
 cd project
-if ["" -ne "$REPO_BRANCH"]; then
-    echo "...Changing to branch: $REPO_BRANCH"
+if [ "" != "$REPO_BRANCH" ]; then
+    echo "... git checkout $REPO_BRANCH"
     git checkout "$REPO_BRANCH"
 fi
 git status
 
 #3. Change to the workspace directory (use REPO_PATH as a relative path to the workspace directory to change this)
-if ["" -ne "$REPO_PATH"]; then
-    echo "...Changing to directory: $REPO_PATH"
+if [ "" != "$REPO_PATH" ]; then
+    echo "... cd $REPO_PATH"
     cd "$REPO_PATH"
 fi
-echo "... CWD: " $(pwd)
+echo "... cwd: " $(pwd)
 
 #4. Docker build the repo (use DOCKER_TAG env variable)
 echo "... docker build -t $DOCKER_TAG ."
