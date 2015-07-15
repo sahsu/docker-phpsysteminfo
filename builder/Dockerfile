@@ -10,6 +10,7 @@ RUN apk --update --no-progress add git docker \
 
 COPY run.sh /run.sh
 
-USER build
+USER    build
+WORKDIR /home/build/
 
 CMD ["/run.sh"]
