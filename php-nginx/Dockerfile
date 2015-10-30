@@ -20,9 +20,9 @@ RUN echo "deb http://ppa.launchpad.net/ondrej/php5-5.6/ubuntu trusty main" > /et
 
 # install composer
 RUN cd /root \
-	&& curl -sS https://getcomposer.org/installer | php \
-	&& mv composer.phar /usr/local/bin/composer \
-	&& mkdir -p /root/.composer
+    && curl -sS https://getcomposer.org/installer | php \
+    && mv composer.phar /usr/local/bin/composer \
+    && mkdir -p /root/.composer
 
 
 # install yii2 global dependency
@@ -31,7 +31,7 @@ RUN cd /tmp && composer global require "fxp/composer-asset-plugin:1.0.3"
 
 # move files into their respective places
 COPY build /root/build/
-RUN	mkdir -p /etc/service/php-fpm /etc/service/nginx \
+RUN    mkdir -p /etc/service/php-fpm /etc/service/nginx \
     && mv /root/build/php-fpm.service /etc/service/php-fpm/run \
     && chmod 0755 /etc/service/php-fpm/run \
     && mv /root/build/nginx.service /etc/service/nginx/run \
@@ -39,7 +39,7 @@ RUN	mkdir -p /etc/service/php-fpm /etc/service/nginx \
     && mv /root/build/git-clone.sh /etc/my_init.d/git-clone.sh \
     && chmod 0755 /etc/my_init.d/git-clone.sh \
     && echo "extension=mcrypt.so"   > /etc/php5/cli/conf.d/20-mcrypt.ini \
-	&& echo "extension=mcrypt.so"   > /etc/php5/fpm/conf.d/20-mcrypt.ini \
-	&& echo "extension=imap.so"     > /etc/php5/cli/conf.d/20-imap.ini \
-	&& echo "extension=imap.so"     > /etc/php5/fpm/conf.d/20-imap.ini
+    && echo "extension=mcrypt.so"   > /etc/php5/fpm/conf.d/20-mcrypt.ini \
+    && echo "extension=imap.so"     > /etc/php5/cli/conf.d/20-imap.ini \
+    && echo "extension=imap.so"     > /etc/php5/fpm/conf.d/20-imap.ini
 
