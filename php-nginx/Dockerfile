@@ -1,36 +1,45 @@
-FROM alpine:latest
-MAINTAINER Stephen Packer <steve@stevepacker.com>
+FROM phusion/baseimage:latest
+MAINTAINER Stephen Packer <stephen.packer@wemonitorhome.com>
+EXPOSE 80 443
 
 ENV HOME=/root
 
-# install packages
-RUN apk --update --no-progress add \
-        nginx git vim curl openssl \
-        php-cli php-fpm php-mcrypt php-curl php-gd php-json php-intl php-openssl \
-        php-pdo_mysql php-pdo_sqlite php-phar php-imap php-iconv php-dom \
-        php-phalcon php-zip php-zlib php-bz2 php-ctype php-sockets php-posix \
-	&& rm -rf /var/cache/apk/*
+CMD ["/sbin/my_init"]
 
-# install s6 supervisor
-ENV S6_VERSION 1.13.0.0
-RUN cd /tmp \
-    && wget https://github.com/just-containers/s6-overlay/releases/download/v$S6_VERSION/s6-overlay-amd64.tar.gz \
-    && tar xzf s6-overlay-amd64.tar.gz -C /
-CMD ["/init"]
+# install php5.6 PPA, packages, upgrade security packages, and cleanup
+#echo "deb http://ppa.launchpad.net/ondrej/php-7.0/ubuntu trusty main" > /etc/apt/sources.list.d/ondrej-php5-7-trusty.list \
+RUN echo "deb http://ppa.launchpad.net/ondrej/php5-5.6/ubuntu trusty main" > /etc/apt/sources.list.d/ondrej-php5-5_6-trusty.list \
+    && apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 4F4EA0AAE5267A6C \
+    ; apt-get update; DEBIAN_FRONTEND=noninteractive apt-get install -y --force-yes \
+        nginx git vim curl openssl \
+        php5-cli php5-fpm php5-curl php5-mcrypt php5-json php5-intl \
+        php5-imap php5-xdebug php5-redis php5-mysql php5-mongo \
+    && apt-get update && apt-get upgrade -y -o Dpkg::Options::="--force-confold" \
+    && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
+
+# install composer
+RUN cd /root \
+	&& curl -sS https://getcomposer.org/installer | php \
+	&& mv composer.phar /usr/local/bin/composer \
+	&& mkdir -p /root/.composer
+
+
+# install yii2 global dependency
+RUN cd /tmp && composer global require "fxp/composer-asset-plugin:1.0.3"
+
 
 # move files into their respective places
 COPY build /root/build/
-RUN	mkdir -p /etc/services.d/nginx /var/www \
-	&& mv /root/build/nginx.s6       /etc/services.d/nginx/run \
-	&& mkdir -p /etc/services.d/php-fpm \
-	&& mv /root/build/php-fpm.s6     /etc/services.d/php-fpm/run \
-	&& mv /root/build/php-fpm.ini    /etc/php/php.ini \
-	&& mv /root/build/php-fpm.conf   /etc/php/php-fpm.conf \
-	&& ln -s /dev/stdout /var/log/nginx/access.log \
-	&& ln -s /dev/stderr /var/log/nginx/error.log
+RUN	mkdir -p /etc/service/php-fpm /etc/service/nginx \
+    && mv /root/build/php-fpm.service /etc/service/php-fpm/run \
+    && chmod 0755 /etc/service/php-fpm/run \
+    && mv /root/build/nginx.service /etc/service/nginx/run \
+    && chmod 0755 /etc/service/nginx/run \
+    && mv /root/build/git-clone.sh /etc/my_init.d/git-clone.sh \
+    && chmod 0755 /etc/my_init.d/git-clone.sh \
+    && echo "extension=mcrypt.so"   > /etc/php5/cli/conf.d/20-mcrypt.ini \
+	&& echo "extension=mcrypt.so"   > /etc/php5/fpm/conf.d/20-mcrypt.ini \
+	&& echo "extension=imap.so"     > /etc/php5/cli/conf.d/20-imap.ini \
+	&& echo "extension=imap.so"     > /etc/php5/fpm/conf.d/20-imap.ini
 
-WORKDIR /var/www
-
-VOLUME ["/var/www"]
-
-EXPOSE 80 443

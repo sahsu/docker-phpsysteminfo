@@ -1,4 +1,4 @@
-#!/usr/bin/with-contenv sh
+#!/bin/sh
 
 /root/build/nginx.php > /etc/nginx/nginx.conf
 

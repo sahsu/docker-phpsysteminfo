@@ -15,7 +15,22 @@ Websites/www.example.com/
 
 ### Example Usage:
 
+Development purposes:
+
     docker run --rm -it \
         -p 8888:80 \
         -v ~/Websites:/var/www \
         stevepacker/php-nginx-alpine
+
+Release purposes:
+
+    docker run -d \
+        --restart=always \
+        --name=blog \
+        -p 8888:80 \
+        -e GIT_CLONE=https://github.com/WordPress/WordPress.git \
+        -e GIT_DEST=/webroot/blog.example.com \
+        stevepacker/php-nginx-alpine
+
+If the git repo has a "composer.lock" file at its root project directory, this will
+run "composer install" before turning the site on.

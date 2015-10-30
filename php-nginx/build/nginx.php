@@ -1,6 +1,6 @@
 #!/usr/bin/php
 <?php
-const BASEDIR = '/var/www';
+const BASEDIR = '/webroot';
 
 $output     = file_get_contents("/root/build/nginx.conf");
 
