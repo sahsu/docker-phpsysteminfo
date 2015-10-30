@@ -1,17 +1,15 @@
 # PHP-Nginx 
 
-This creates a Docker container running Nginx and PHP-FPM on 
-[Alpine Linux](https://github.com/gliderlabs/docker-alpine).
-
+This creates a Docker container running Nginx and PHP-FPM on Ubuntu
 ### Critical Files
 
 If you'd like to override any of these files, you can volume-mount over them
 
 ### Expected file structure
 
-Websites/www.example.com/.config/nginx.conf (optional. provide a custom nginx "server{}" block)
-Websites/www.example.com/web/index.php
-Websites/www.example.com/
+/webroot/www.example.com/.config/nginx.conf (optional. provide a custom nginx "server{}" block)
+/webroot/www.example.com/web/index.php
+/webroot/www.example.com/
 
 ### Example Usage:
 
@@ -19,8 +17,8 @@ Development purposes:
 
     docker run --rm -it \
         -p 8888:80 \
-        -v ~/Websites:/var/www \
-        stevepacker/php-nginx-alpine
+        -v ~/Website:/webroot/www.example.com \
+        stevepacker/php-nginx
 
 Release purposes:
 
