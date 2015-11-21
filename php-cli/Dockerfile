@@ -6,7 +6,7 @@ MAINTAINER Stephen Packer <steve@stevepacker.com>
 RUN echo "deb http://ppa.launchpad.net/ondrej/php5-5.6/ubuntu trusty main" > /etc/apt/sources.list.d/ondrej-php5-5_6-trusty.list \
     && apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 4F4EA0AAE5267A6C \
     ; apt-get update; DEBIAN_FRONTEND=noninteractive apt-get install -y --force-yes \
-        git vim curl openssl \
+        git vim curl openssl busybox \
         php5-cli php5-curl php5-mcrypt php5-json php5-intl \
         php5-imap php5-redis php5-mysql php5-mongo php5-sqlite \
     && apt-get update && apt-get upgrade -y -o Dpkg::Options::="--force-confold" \
