@@ -20,7 +20,7 @@ RUN cd /tmp \
 CMD ["/init"]
 
 # install owncloud
-ENV OWNCLOUD_VERSION 8.2.0
+ENV OWNCLOUD_VERSION 8.2.2
 ENV OWNCLOUD_PACKAGE owncloud-$OWNCLOUD_VERSION.tar.bz2
 ENV OWNCLOUD_URL https://download.owncloud.org/community/$OWNCLOUD_PACKAGE
 RUN mkdir -p /opt \
