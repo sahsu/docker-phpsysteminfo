@@ -13,7 +13,7 @@ This creates a Docker container running [Samba](https://www.samba.org) on [Alpin
         -e WORKGROUP=WORKGROUP \
         -e SAMBA_NAME=dockerSamba \
         -e SHARE_NAME=public \
-        stevepacker/samba
+        stevepacker/samba-alpine
 
 ### Example Usage with multiple shares:
 
@@ -28,5 +28,5 @@ This creates a Docker container running [Samba](https://www.samba.org) on [Alpin
         -v ~/Documents:/Documents \
         -e WORKGROUP=WORKGROUP \
         -e SAMBA_NAME=dockerSamba \
-        stevepacker/samba
+        stevepacker/samba-alpine
 
