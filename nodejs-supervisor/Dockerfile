@@ -18,4 +18,5 @@ RUN cd /tmp \
 ENTRYPOINT ["/init"]
 
 COPY apk-install.sh /etc/cont-init.d/10-apk-install
-COPY npm-install.sh /etc/cont-init.d/20-npm-install
+COPY jit_init.sh    /etc/cont-init.d/20-jit-init
+COPY npm-install.sh /etc/cont-init.d/50-npm-install
