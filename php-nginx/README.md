@@ -1,6 +1,12 @@
 # PHP-Nginx 
 
 This creates a Docker container running Nginx and PHP-FPM on Ubuntu
+
+# **DEPRECATED - NO LONGER MAINTAINED**
+
+This project is no longer being maintained.  To see something cooler, look at:
+https://github.com/stevepacker/docker-containers/tree/caddy-php
+
 ### Critical Files
 
 If you'd like to override any of these files, you can volume-mount over them

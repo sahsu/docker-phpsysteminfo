@@ -1,5 +1,11 @@
 # PHPSysInfo
 
+## **DEPRECATED**
+
+I am no longer maintaining this container image.
+
+## **NO LONGER BEING MAINTAINED**
+
 This creates a Docker container running [PHPSysInfo](https://phpsysinfo.github.io/phpsysinfo/) 
 on [Alpine Linux](https://github.com/gliderlabs/docker-alpine).
 
